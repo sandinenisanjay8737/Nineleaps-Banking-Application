@@ -3,6 +3,7 @@ from registration import Registration
 from netbanking import Netbanking
 from beneficiaries import Beneficiaries
 from cards import Cards
+from validation import Validation
 
 
 info = {1:'Name',2:'Account number',3:'Mobile',4:'Balance'}
@@ -10,6 +11,7 @@ more_info = {1:'Beneficiaries',2:'Cards'}
 
 con = Execution()
 cur = con.cursor
+val = Validation()
 
 
 class Login:
@@ -135,10 +137,10 @@ class Login:
 
                     new_info = input('\nEnter the new {} : '.format(s[1]))
 
-                    if new_info.replace(' ','').isalpha() is True:                  # User Name Validation       
+                    flag = val.name_check(new_info)                   # User Name Validation
+
+                    if flag is True:
                         break
-                    else:
-                        print('\nInvalid Input\nUser name should not contain digits or special characters.\nTry Again....')
 
             elif inp == '2':
 
@@ -151,27 +153,23 @@ class Login:
                     new_info = input('\nEnter the new {} : '.format(s[3]))
                     ano = new_info.replace(' ','')
 
-                    if (ano.isnumeric() and len(ano)==12) is True:              # Aadhar Number Validation
+                    flag = val.aadhar_check(ano)                     # Aadhar Number Validation
+
+                    if flag is True:
                         break
-                    else:
-                        print('\nInvalid Input\nAadhar Number should not contain alphabets or special characters and must be 12 digits long (excluding spaces).\nTry Again...')
         
             elif inp == '4':
 
                 while True:
 
                     new_info = input('\nEnter the new {} : '.format(s[4]))
-                    mno = new_info.replace('+91 ','').replace('+91','')           # Mobile Number Validation
+                    mno = new_info.replace('+91 ','').replace('+91','')
 
-                    if (mno.isnumeric() and len(mno)==10):
-                
-                        if (mno[0] in ['6','7','8','9']) is True:
-                            break
-                        else:
-                            print('\nInvalid Mobile Number.\nMobile number must start with any of [ 6,7,8,9 ].')
-                    else:
-                        print('\nInvalid Input\nMobile Number must be 10 digits long and should not contain alphabets or special characters.\nTry Again...')
-            
+                    flag = val.mobile_check(mno)                     # Mobile Number Validation
+
+                    if flag is True:
+                        break
+                    
 
             query = "update registration set {} = (%s) where accno = (select accno from login where user_id = (%s))".format(s[int(inp)].lower())
             seq = (new_info,userid)
