@@ -2,7 +2,7 @@ from login import Login
 from beneficiaries import Beneficiaries
 from cards import Cards
 
-options = {1:'Add a Beneficiary',2:'Update Account info',3:'Transfer Fund',4:'Change MPIN',5:'Register New Credit Card'}
+options = {1:'Add a Beneficiary',2:'Update Account information',3:'Transfer Funds',4:'Change card MPIN',5:'Register for a New Card'}
 
 class info_and_options:
 

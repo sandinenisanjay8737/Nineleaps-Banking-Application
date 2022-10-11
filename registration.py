@@ -53,7 +53,7 @@ class Registration:
 
         self.accno = '251510'+str(randint(10**5,(10**6-1)))  # Generating Account Number
 
-        balance = 0                                          # Balance initiated to 0.
+        balance = 10000                                      # Balance initiated to 10000.
 
         s = [name,address,ano,mno,self.accno,balance]
         self.s = s
@@ -68,10 +68,10 @@ class Registration:
         con.execute(query2,seq2)                             # Queries to allot one credit card and one debit card to the new user.
         con.execute(query3,seq3)
         
-        print('\n','< Registration completed >'.center(40,'*'),'\n')
+        print('\n','| Registration completed |'.center(40,'*'),'\n')
         for i in range(10):
             print("\U0001F973",end='  ')                     # This prints a sequence of emojis.
-        print('\n')
+        print()
 
     def print_details(self):
 
@@ -84,7 +84,7 @@ class Registration:
         acc = list(reg.values())
         acc.extend(['Account Number','Balance'])
 
-        print('-'*54)                                        # This prints the details in a Tabular format.
+        print('-'*56)                                        # This prints the details in a Tabular format.
         for i in zip(acc,output[1:]):
             print('|  {:^16}  |      {:<20}     |'.format(i[0],i[1]))
-            print('-'*54)
+            print('-'*56)

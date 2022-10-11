@@ -8,7 +8,7 @@ cur = con.cursor
 class Netbanking:
 
     def __init__(self,accno):
-        self.accno = accno
+        self.accno = accno                # While creating an instance of this class, we have to pass accno as argument.
 
     def create_netbanking(self):
         
@@ -20,7 +20,7 @@ class Netbanking:
     
             query1 = "select user_id from login"
             seq1 = ()
-            con.execute(query1,seq1)                    # Query to get all the existing userid's.
+            con.execute(query1,seq1)      # Query to get all the existing userid's.
             ids = cur.fetchall()
             l = []
             for i in ids:
@@ -28,7 +28,7 @@ class Netbanking:
 
             user_id = input('\nCreate a User Id : ')         
 
-            if user_id in l:         # Checks if the user_id matches with any of the existing usernames.
+            if user_id in l:              # Checks if the user_id matches with any of the existing usernames.
 
                 print('\nUser_id not Available. Try another..')
             
@@ -54,7 +54,7 @@ class Netbanking:
                     break
                 
                 else:
-                    print('Password must not contain Whitespaces and special characters except ( \'@\' or \'_\' or \'.\' ) are not allowed.\nTry Again....')
+                    print('\nPassword must not contain Whitespaces and special characters except ( \'@\' or \'_\' or \'.\' ) are not allowed.\nTry Again....')
 
         while True:
 

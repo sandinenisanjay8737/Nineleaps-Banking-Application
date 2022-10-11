@@ -16,6 +16,9 @@ val = Validation()
 
 class Login:
 
+    def __init__(self,locked=False):
+        self.locked = locked
+
     def logging_in(self):
 
         print('\n'+('-'*14).center(50,' '))
@@ -45,16 +48,16 @@ class Login:
                 i = 1
                 while i<=4:                                                 # Loop with only 4 iterations to ask correct password from the user.
 
-                    password = input('\nPassword : ')
+                    password = input('\nPassword           : ')
 
                     if password == correct_password:
                         break
                     else:
                         print('\nIncorrect Password. Try Again....\n')
-                        print('Attempts Left',4-i,'\n')
+                        print('Attempts Left - ( {} )'.format(4-i))
                         if i == 4:                                          # Breaks out of while loop when all attempts are used.
 
-                            print('\nAll attempts used. Login After 24 hours\n')
+                            print('\nAll attempts used. Login After 24 hours.\n')
                             self.locked = True                              # Creating a class attribute "locked" for accessing again when required. 
                         i+=1                                                
                 
@@ -86,10 +89,10 @@ class Login:
         con.execute(query,seq)                                              # Query to get account details of the user from registration table.
         acc_info = cur.fetchone()
 
-        print('-'*54)
+        print('-'*64)
         for i in zip(list(info.values()), acc_info):
-            print('|  {:^16}  |      {:<20}     |'.format(i[0],i[1]))       # Prints all the Account details in tabular form.
-            print('-'*54)
+            print('|  {:^16}  |      {:<30}     |'.format(i[0],i[1]))       # Prints all the Account details in tabular form.
+            print('-'*64)
 
     def more_info(self):
         
@@ -103,7 +106,7 @@ class Login:
                 print('| {} | {:<15} |'.format(i,j))
                 print('-'*23)
             
-            a = input('\nSelect 1 for your Beneficiaries or 2 for your Cards information or any other key to exit: ')
+            a = input('\nSelect 1 for your Beneficiaries or 2 for your Cards information or any other key for Options : ')
             if a == '1':
                 ben.list_beneficiaries()                                    # Prints all the beneficiaries present.
             elif a == '2':

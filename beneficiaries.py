@@ -60,7 +60,7 @@ class Beneficiaries:
             amount = int(input('\nEnter the amount : '))
             if amount < cur_balance:
 
-                print('\nTransaction Processing\n')   
+                print('\nTransaction Processing...')   
 
                 load = Loading()
                 load.processing()
@@ -82,5 +82,5 @@ class Beneficiaries:
                 break
                 
             else:
-                print('Insufficient Funds in your account. Enter a lesser Amount')
+                print('\nInsufficient Funds in your account. Try with a lesser Amount.')
 
