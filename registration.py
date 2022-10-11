@@ -82,7 +82,3 @@ class Registration:
         for i in zip(acc,output[1:]):
             print('|  {:^16}  |      {:<20}     |'.format(i[0],i[1]))
             print('-'*54)
-
-a = Registration()
-a.register()
-a.print_details()
