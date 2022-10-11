@@ -24,10 +24,6 @@ class Registration:
             if flag is True:
                 break
 
-            # if name.replace(' ','').isalpha() is True:                         
-            #     break
-            # else:
-            #     print('\nInvalid Input\nUser name should not contain digits or special characters.\nTry Again....')
 
         address = input(f'\nEnter your {reg[2]} : ')         # No Validation for address as it may contain alphabets,digits and special characters
 
