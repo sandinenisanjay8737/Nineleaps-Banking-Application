@@ -11,8 +11,8 @@ while True:
     if inp == '1':
 
         login = Login()
-        userid = login.userid
         login.logging_in()
+        userid = login.userid
 
         print('\nLogging In. Please wait...')
 

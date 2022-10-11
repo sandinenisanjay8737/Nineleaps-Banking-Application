@@ -70,7 +70,7 @@ class Login:
                         reg = Registration()
                         reg.register()
                         reg.print_details()
-                        nb = Netbanking()
+                        nb = Netbanking(reg.accno)
                         nb.create_netbanking()
                     else:
                         print('\nInvalid Input. Try Again...')
