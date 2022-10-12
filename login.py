@@ -16,8 +16,9 @@ val = Validation()
 
 class Login:
 
-    def __init__(self,locked=False):
+    def __init__(self,locked=False,maintenance=False):
         self.locked = locked
+        self.maintenance = maintenance
 
     def logging_in(self):
 
@@ -36,7 +37,7 @@ class Login:
             ids = cur.fetchall()
             l = []
             for i in ids:
-                l.append(i[0])            
+                l.append(i[0])
 
             if userid in l:
 
@@ -52,6 +53,7 @@ class Login:
 
                     if password == correct_password:
                         break
+
                     else:
                         print('\nIncorrect Password. Try Again....\n')
                         print('Attempts Left - ( {} )'.format(4-i))
@@ -59,8 +61,7 @@ class Login:
 
                             print('\nAll attempts used. Login After 24 hours.\n')
                             self.locked = True                              # Creating a class attribute "locked" for accessing again when required. 
-                        i+=1                                                
-                
+                        i+=1                                                                
                 break
 
             else:
@@ -70,14 +71,18 @@ class Login:
                 while True:
 
                     inp = input('\nPress 1 to give User Id again or 2 if have not registered before : ')
+                    
                     if inp == '1':
                         break
+                    
                     elif inp == '2':
+
                         reg = Registration()
                         reg.register()
                         reg.print_details()
                         nb = Netbanking(reg.accno)
                         nb.create_netbanking()
+                    
                     else:
                         print('\nInvalid Input. Try Again...')
 

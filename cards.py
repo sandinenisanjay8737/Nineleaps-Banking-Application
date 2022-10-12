@@ -42,18 +42,29 @@ class Cards:
 
     def reg_newcard(self):
 
-        print('\n','< Application for a new card >'.center(50,'*'),'\n')
-        inp = input('Press 1 to apply for a Credit card or any other key for Debit card : ')
-        if inp == '1':
-            query = "update credit_cards set id = (%s) where id = (select id+50 from registration where accno = (%s))"
-            seq = (self.accno,self.accno)
-            con.execute(query,seq)
-            print('\nNew Credit card applied and will be sent to you within 5 working days...')
+        query = "select count(*) from ((select * from credit_cards where id = (%s)) union all (select * from debit_cards where id = (%s))) a"
+        seq = (self.accno,self.accno)
+        con.execute(query,seq)
+        num_cards = cur.fetchone()[0]
+
+        if num_cards < 4:
+
+            print('\n','< Application for a new card >'.center(50,'*'),'\n')
+            inp = input('Press 1 to apply for a Credit card or any other key for Debit card : ')
+            if inp == '1':
+                query = "update credit_cards set id = (%s) where id = (select id+50 from registration where accno = (%s))"
+                seq = (self.accno,self.accno)
+                con.execute(query,seq)
+                print('\nNew Credit card applied and will be sent to you within 5 working days...')
+            else:
+                query = "update debit_cards set id = (%s) where id = (select id+50 from registration where accno = (%s))"
+                seq = (self.accno,self.accno)
+                con.execute(query,seq)
+                print('\nNew Debit card applied and will be sent to you within 5 working days...')
+
         else:
-            query = "update debit_cards set id = (%s) where id = (select id+50 from registration where accno = (%s))"
-            seq = (self.accno,self.accno)
-            con.execute(query,seq)
-            print('\nNew Debit card applied and will be sent to you within 5 working days...')
+            print('\nNumber of cards reached maximum limit.\nYou cannot apply for another...')
+            
 
     def change_mpin(self):
 
