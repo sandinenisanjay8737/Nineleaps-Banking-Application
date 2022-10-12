@@ -1,5 +1,5 @@
 import mysql.connector as mysqlcon
-from config import Details
+from credentials import Details
 
 class Connection:
 
@@ -42,7 +42,7 @@ class Execution:
                     query (str): SQL query that is to be executed.
                     seq (tuple): Tuple consisting of parameters that takes their corresponding positions in the query string.
             Returns: None.
-            
+
             '''
 
             self.query = query
