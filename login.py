@@ -60,8 +60,7 @@ class Login:
         '''
         This method is for Logging the user in.
         A query is executed to get all the existing usernames of users in our Bank. After user enters the User Id, it is validated.
-        If the beneficiary Account Number is in the same bank, then only user can add this beneficiary. Beneficiary cannot be added otherwise.
-        Also the user cannot add their own Account as a beneficiary. These exceptions are handled in this method.
+        If the User Id does not exist, then user is asked again for the User Id. 
 
         Parameters: None
         Returns: None
