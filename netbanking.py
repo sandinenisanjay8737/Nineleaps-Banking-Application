@@ -16,6 +16,11 @@ class Netbanking:
     When there is a need to create a netbanking account for the new user, 
     We need to create an object of this class in that file and we can call this class method depending on our requirement.
 
+    Parameters:
+        accno (str) : Account number assigned to the newly registered user.
+    
+    Methods:
+        1) create_netbanking().
     '''
 
     def __init__(self,accno):
@@ -30,6 +35,53 @@ class Netbanking:
         self.accno = accno                # While creating an instance of this class, we have to pass accno as argument.
 
     def create_netbanking(self):
+
+        '''
+        This method is for creating a netbanking account for the new user 
+        while taking inputs from the user for different fields like userid, password after registration is completed.
+
+        A query is executed to get all the existing Userid's of Users in our Bank. 
+        After the user enters the New User Id, it is checked for validation.
+
+        If the User Id is already existing in the same bank for another user, 
+        then user is asked to give another User Id. Then the User Id is validated.
+
+        Valid User Id must only contain:
+
+            1) Numeric digits are allowed.
+            2) Alphabets ( UPPER CASE or LOWER CASE ).
+            3) Only Two Special characters are allowed:
+                    A) '.' (dot).
+                    B) '_' (underscore).
+
+        It must not have:
+
+            1) Whitespaces.
+        
+        If the User Id is Valid, then the user is asked for a password, once they onter one, it is validated.
+
+        Valid Password must only contain:
+
+            1) Numeric digits are allowed.
+            2) Alphabets ( UPPER CASE or LOWER CASE ).
+            3) Only Three Special characters are allowed:
+                    A) '.' (dot).
+                    B) '_' (underscore).
+                    C) '@' (at the rate of).
+            4) Length must be greater than 8 and less than 20.
+
+        It must not have:
+
+            1) Whitespaces.
+
+        Once the User Id and Password are valid, then the user is asked to confirm password.
+        It keeps asking the user to confirm password till they enter the correct password.
+
+        Once everything is done, a query is executed to insert the netbanking details into the login table.
+
+        Parameters: None
+        Returns: None
+        '''
         
         time.sleep(1)
         print('\nDigital Banking at your Mobile....\nEnable your Net Banking in no-time\n')
@@ -84,8 +136,10 @@ class Netbanking:
 
             if confirmpassword == password:                               # Password Confirmation
 
-                query = "insert into login (accno, user_id, password) values (%s,%s,%s)"
-                seq = (self.accno,user_id,password)
+                query = '''INSERT INTO login (accno, user_id, password) 
+                           VALUES (%s,%s,%s)'''
+                
+                seq = (self.accno,user_id,password)                       # Query to insert the netbanking details into the login table.
                 con.execute(query,seq)
                 print('\nNet Banking Enabled...\n')
                 for i in range(10):

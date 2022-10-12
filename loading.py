@@ -9,6 +9,8 @@ class Loading:
     When there is a need to display the status bar, 
     We need to create an object of this class in that file and we can call this class method depending on our requirement.
 
+    Method:
+        1) processing().
     '''
 
     animation = ["■□□□□□□□□□","■■□□□□□□□□", "■■■□□□□□□□", "■■■■□□□□□□", "■■■■■□□□□□", "■■■■■■□□□□",

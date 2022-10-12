@@ -2,19 +2,21 @@ from login import Login
 from beneficiaries import Beneficiaries
 from cards import Cards
 
-options = {1:'Add a Beneficiary',2:'Update Account information',3:'Transfer Funds',4:'Change card MPIN',5:'Register for a New Card'}
+options = {1:'List Beneficiaries',2:'List Cards',3:'Add a Beneficiary',4:'Update Account information',5:'Transfer Funds',6:'Change card MPIN',7:'Register for a New Card'}
 
-class info_and_options:
+class Info_and_Options:
 
     '''
     The info_and_options class is for providing different options for the user logged in.
 
     Those options are:
-            1) Add a Beneficiary.
-            2) Update Account information.
-            3) Transfer Funds.
-            4) Change card MPIN.
-            5) Register for a New Card.
+            1) List Beneficiaries.
+            2) List Cards.
+            3) Add a Beneficiary.
+            4) Update Account information.
+            5) Transfer Funds.
+            6) Change card MPIN.
+            7) Register for a New Card.
 
     It has one method defined for printing a list of options available for user logged in
     while taking input from the user to select any option among the options. And then the selected operation is carried out.
@@ -59,18 +61,24 @@ class info_and_options:
             inp2 = input('\nSelect the field you need : ')
 
             if inp2 == '1':
-                ben.add_beneficiary()                # Calling add_beneficiary method from Beneficiaries class for adding a new beneficiary.
+                ben.list_beneficiaries()             # Calling list_beneficiaries method from Beneficiaries class for printing all the existing beneficiaries.
 
             elif inp2 == '2':
-                login.update_info(self.userid)       # Calling update_info method from Login class for updating the Account information.
+                cards.cards_info()                   # Calling cards_info method from Cards class for printing all cards details.
 
             elif inp2 == '3':
-                ben.transfer_funds()                 # Calling transfer_funds method from Beneficiaries class to tranfer funds from the account of user logged in.
+                ben.add_beneficiary()                # Calling add_beneficiary method from Beneficiaries class for adding a new beneficiary.
 
             elif inp2 == '4':
-                cards.change_mpin()                  # Calling change_mpin method from Cards class for changing the MPIN.
+                login.update_info(self.userid)       # Calling update_info method from Login class for updating the Account information.
 
             elif inp2 == '5':
+                ben.transfer_funds()                 # Calling transfer_funds method from Beneficiaries class to tranfer funds from the account of user logged in.
+
+            elif inp2 == '6':
+                cards.change_mpin()                  # Calling change_mpin method from Cards class for changing the MPIN.
+
+            elif inp2 == '7':
                 cards.reg_newcard()                  # Calling reg_newcard method from Cards class to register for a new card.
 
             else:

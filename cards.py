@@ -15,6 +15,13 @@ class Cards:
     When there is a need to display card details or carry out these operations, 
     We need to create an object of this class in that file and we can call these class methods depending on our requirement.
 
+    Parameters:
+        userid (str) : Userid input given by the user while logging in.
+
+    Methods:
+        1) cards_info().
+        2) reg_newcard().
+        3) change_mpin().
     '''
 
     def __init__(self,userid):

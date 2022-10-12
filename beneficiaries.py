@@ -16,6 +16,13 @@ class Beneficiaries:
     When there is a need to display beneficiary details or carry out these operations, 
     We need to create an object of this class in that file and we can call these class methods depending on our requirement.
 
+    Parameters:
+        userid (str) : Userid input given by the user while logging in.
+    
+    Methods:
+        1) add_beneficiary().
+        2) list_beneficiaries().
+        3) transfer_funds().
     '''
 
     def __init__(self,userid):
@@ -43,6 +50,7 @@ class Beneficiaries:
         This method is for adding a new beneficiary for the user.
         A query is executed to get all the existing Account Numbers in our Bank. After user enters the beneficiary Account Number, it is validated.
         If the beneficiary Account Number is in the same bank, then only user can add this beneficiary. Beneficiary cannot be added otherwise.
+        Also the user cannot add their own Account as a beneficiary. These exceptions are handled in this method.
 
         Parameters: None
         Returns: None
@@ -52,7 +60,7 @@ class Beneficiaries:
 
         ben_name = input('\nEnter the Beneficiary Name : ')
 
-        while True:                              # Infinite while loop that breaks only when user enters beneficiary accno from the same Bank.
+        while True:                              # Infinite while loop that breaks only when user enters beneficiary accno from the same Bank and not his own.
 
             ben_accno = input('\nEnter Beneficiary Account Number : ')
 
@@ -66,16 +74,22 @@ class Beneficiaries:
 
             if ben_accno in l:
 
-                query2 = "INSERT INTO beneficiaries VALUES (%s,%s,%s,%s)"
-                seq2 = (self.userid,self.accno,ben_accno,ben_name)
+                if ben_accno != self.accno:      # While loop breaks when entered Beneficiary Account Number is not his own.
 
-                con.execute(query2,seq2)         # Query to insert the newly added beneficiary details in the beneficiaries table after validation.
+                    query2 = "INSERT INTO beneficiaries VALUES (%s,%s,%s,%s)"
+                    seq2 = (self.userid,self.accno,ben_accno,ben_name)
 
-                print('\nNew Beneficiary Added successfully.....\n')
-                break
+                    con.execute(query2,seq2)     # Query to insert the newly added beneficiary details in the beneficiaries table after validation.
+
+                    print('\nNew Beneficiary Added successfully.....\n')
+                    break
+                
+                else:
+                    print('\nYou cannot add your Account as beneficiary.\nTry Again...')
+
 
             else:
-                print('\nAccount Number is not from our bank.\nYou can only add a beneficiary only if they are from Nineleaps Bank...\nTry Again...')
+                print('\nAccount Number is not from our bank.\nYou can add a beneficiary only if they are from Nineleaps Bank...\nTry Again...')
 
         
 
@@ -114,7 +128,8 @@ class Beneficiaries:
         This method is for transferring funds to the beneficiaries that the user already have.
         The list_beneficiaries method from the same class is called to list all the existing beneficiaries of the user.
         A query is executed to get the current balance of the user. After the user enters the transfer amount,
-        It checks if the entered amount is less than the available balance.
+        It checks if the entered amount is less than the available balance, then tranfer funds. Otherwise, amount is asked again.
+        And a query is executed to insert the transaction details with the transaction timestamp into the transactions table.
 
         Parameters: None
         Returns: None
@@ -131,27 +146,36 @@ class Beneficiaries:
         con.execute(query1,seq1)                  # Query to get the available balance of the Account of the user.
         cur_balance = int(cur.fetchone()[0])
 
-        while True:
+        while True:                               # Infinite While loop that breaks only when a transaction is completed.
 
             amount = int(input('\nEnter the amount : '))
+
             if amount < cur_balance:
 
                 print('\nTransaction Processing...')   
 
-                load = Loading()
-                load.processing()
+                load = Loading()                  # Creating an object of Loading class.
+                load.processing()                 # Calling the processing method to display the status bar.
 
-                query2 = "update registration set balance = balance - (%s) where accno = (%s)"
-                seq2 = (amount,self.accno)
+                query2 = '''UPDATE registration
+                            SET balance = balance - (%s) 
+                            WHERE accno = (%s)'''
+                
+                seq2 = (amount,self.accno)        # Query to subtract the entered amount from the User Account.
                 con.execute(query2,seq2)
 
-                query3 = "update registration set balance = balance + (%s) where accno = (%s)"
-                seq3 = (amount,self.s[inp])
+                query3 = '''UPDATE registration
+                            SET balance = balance + (%s) 
+                            WHERE accno = (%s)'''
+                
+                seq3 = (amount,self.s[inp])       # Query to add the entered amount to the selected beneficiary Account.
                 con.execute(query3,seq3)
 
-                query4 = "insert into transactions(from_acc,to_acc,amount,transaction_timestamp) values (%s,%s,%s,now())"
+                query4 = '''INSERT INTO transactions(from_acc,to_acc,amount,transaction_timestamp) 
+                            VALUES (%s,%s,%s,now())'''
+                
                 seq4 = (self.accno,self.s[inp],amount)
-                con.execute(query4,seq4)
+                con.execute(query4,seq4)          # Query to insert the transaction details into the transactions table.
 
                 print('\nTransaction Successful....')
 

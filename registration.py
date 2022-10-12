@@ -3,9 +3,9 @@ import time
 from connection import Execution
 from validation import Validation
 
-con = Execution()                                            # Creating an object of Execution class to execute queries in this file.
+con = Execution()                 # Creating an object of Execution class to execute queries in this file.
 cur = con.cursor
-val = Validation()                                           # Creating an object of Validation class to validate the inputs given by the user.
+val = Validation()                # Creating an object of Validation class to validate the inputs given by the user.
 
 class Registration:
 
@@ -16,12 +16,24 @@ class Registration:
     When there is a need to register a new user, 
     We need to create an object of this class in that file and we can call these class methods depending on our requirement.
 
+    Methods:
+        1) register().
+        2) print_details().
     '''
 
     def register(self):
 
         '''
         This method is used to register a new user.
+        It asks the user inputs for different fields like Name, Address, Aadhar Number, Mobile Number.
+        It validates the each input by calling the methods from Validation class.
+
+        A new Account Number is generated and allotted to the new user. And Balance is initiated to 10,000.
+        One new credit and one new debit card are allotted the user.
+
+        Then a query is executed to insert the New User details into the registration table.
+        Two queries are executed to update the account number assigned to the new user in both the credit_cards and debit_cards tables.
+
         Parameters: None.
         Returns: None.
 
@@ -103,7 +115,10 @@ class Registration:
     def print_details(self):
 
         '''
-        This method is used to print the details of the new user in a Tabular format once the registration is completed.
+        This method is used to print the details of the new user once the registration is completed.
+        A query is executed to fetch the latest inserted entry from the registration table i.e.,the new user's details.
+        Then it iterates through the query result to print the information in a tabular format.
+        
         Parameters: None.
         Returns: None.
 

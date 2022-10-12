@@ -26,6 +26,8 @@ class Execution:
     When there is a need to execute the queries, 
     We need to create an object of this class in that file and we can call this class method depending on our requirement.
 
+    Methods:
+        1) execute(query,seq).
     '''
 
     try:

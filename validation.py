@@ -7,6 +7,10 @@ class Validation:
     When there is a need to validate the user inputs, 
     We need to create an object of this class in that file and we can call these class methods depending on our requirement.
 
+    Methods:
+        1) name_check(name).
+        2) aadhar_check(ano).
+        3) mobile_check(mno).
     '''
 
     def name_check(self,name,flag=False):                           # User Name Validation
