@@ -3,18 +3,34 @@ import time
 from connection import Execution
 from validation import Validation
 
-con = Execution()
+con = Execution()                                            # Creating an object of Execution class to execute queries in this file.
 cur = con.cursor
-val = Validation()
-
-reg = {1:'Name', 2:'Address', 3:'Aadhar Number', 4:'Mobile'}
+val = Validation()                                           # Creating an object of Validation class to validate the inputs given by the user.
 
 class Registration:
 
+    '''
+    The Registration class is for registering a new user while taking inputs from the user for different fields like Name, Address, Aadhar Number and Mobile Number.
+    It has methods defined for registering a new user and printing the details after registration is completed.
+
+    When there is a need to register a new user, 
+    We need to create an object of this class in that file and we can call these class methods depending on our requirement.
+
+    '''
+
     def register(self):
+
+        '''
+        This method is used to register a new user.
+        Parameters: None.
+        Returns: None.
+
+        '''
 
         print('\nWelcome to Nineleaps Bank....\nLet\'s get started\n')
         time.sleep(1)
+
+        reg = {1:'Name', 2:'Address', 3:'Aadhar Number', 4:'Mobile'}
 
         enterstring = '\nEnter your {:15} : '
 
@@ -55,17 +71,28 @@ class Registration:
 
         balance = 10000                                      # Balance initiated to 10000.
 
-        s = [name,address,ano,mno,self.accno,balance]
+        s = [name,address,ano,mno,self.accno,balance]        # Taking the filtered aadhar number (ano) and mobile number (mno) to store in the registration table.
         self.s = s
 
-        query = "insert into registration (user_name, address, aadhar, mobile, accno, balance) values (%s,%s,%s,%s,%s,%s)"
+        query = '''INSERT INTO registration (user_name, address, aadhar, mobile, accno, balance) 
+                    VALUES (%s,%s,%s,%s,%s,%s)'''
 
         con.execute(query,self.s)                            # Query to insert the new user information into the registration table.
 
-        query2 = "update credit_cards set id = (%s) where id = (select id from registration where user_name = (%s) and mobile = (%s))"
-        query3 = "update debit_cards set id = (%s) where id = (select id from registration where user_name = (%s) and mobile = (%s))"
+        query2 = '''UPDATE credit_cards SET id = (%s) 
+                    WHERE id = (SELECT id 
+                                FROM registration 
+                                WHERE user_name = (%s) AND mobile = (%s))'''
+         
+                                                             # Queries to allot one credit card and one debit card to the new user.
+        
+        query3 = '''UPDATE debit_cards SET id = (%s) 
+                    WHERE ID = (SELECT id 
+                                FROM registration 
+                                WHERE user_name = (%s) AND mobile = (%s))'''
+        
         seq2 = seq3 = (self.accno,self.s[0],self.s[3])
-        con.execute(query2,seq2)                             # Queries to allot one credit card and one debit card to the new user.
+        con.execute(query2,seq2)
         con.execute(query3,seq3)
         
         print('\n','| Registration completed |'.center(40,'*'),'\n')
@@ -75,11 +102,22 @@ class Registration:
 
     def print_details(self):
 
+        '''
+        This method is used to print the details of the new user in a Tabular format once the registration is completed.
+        Parameters: None.
+        Returns: None.
+
+        '''
+        reg = {1:'Name', 2:'Address', 3:'Aadhar Number', 4:'Mobile'}
+
         print('\n','< Your Account Details >'.center(50,'*'),'\n')
         
-        query = "select * from registration order by id desc limit 1"
+        query = '''SELECT * 
+                    FROM registration 
+                    ORDER BY id DESC LIMIT 1'''              # Query to fetch the latest inserted entry i.e.,the new user's details.
+        
         cur.execute(query,())
-        output = cur.fetchone()                              # Query to fetch the latest inserted entry i.e.,the new user's details.
+        output = cur.fetchone()
 
         acc = list(reg.values())
         acc.extend(['Account Number','Balance'])

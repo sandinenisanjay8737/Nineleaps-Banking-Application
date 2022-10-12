@@ -7,7 +7,26 @@ cur = con.cursor
 
 class Netbanking:
 
+    '''
+    The Netbanking class is for enabling netbanking for the newly registered user.
+
+    It has one method defined for creating a netbanking account for the new user 
+    while taking inputs from the user for different fields like userid, password after registration is completed.
+
+    When there is a need to create a netbanking account for the new user, 
+    We need to create an object of this class in that file and we can call this class method depending on our requirement.
+
+    '''
+
     def __init__(self,accno):
+
+        """
+        Constructs all the necessary attributes for the Netbanking object.
+
+        Parameters:
+            accno (str) : Account number assigned to the newly registered user.
+        """
+
         self.accno = accno                # While creating an instance of this class, we have to pass accno as argument.
 
     def create_netbanking(self):
@@ -18,9 +37,10 @@ class Netbanking:
 
         while True:
     
-            query1 = "select user_id from login"
-            seq1 = ()
-            con.execute(query1,seq1)      # Query to get all the existing userid's.
+            query1 = '''SELECT user_id 
+                        FROM login'''
+            seq1 = ()                     # Query to get all the existing userid's.
+            con.execute(query1,seq1)
             ids = cur.fetchall()
             l = []
             for i in ids:

@@ -16,7 +16,22 @@ val = Validation()
 
 class Login:
 
+    
+
     def __init__(self,locked=False,maintenance=False):
+
+        """
+        Constructs all the necessary attributes for the Login object.
+
+        Parameters:
+
+                 locked (bool) : Keyword argument initiated as False.( default is False )
+                                 Changes to True if all the password attempts are used.
+            
+            maintenance (bool) : Keyword argument initiated as False.( default is False )
+                                 Must be passed as True when we don't want the users to login during maintenance of the Application.
+        """
+
         self.locked = locked
         self.maintenance = maintenance
 
