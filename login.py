@@ -1,8 +1,6 @@
 from connection import Execution
 from registration import Registration
 from netbanking import Netbanking
-from beneficiaries import Beneficiaries
-from cards import Cards
 from validation import Validation
 
 
