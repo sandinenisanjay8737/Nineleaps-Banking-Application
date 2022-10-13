@@ -62,32 +62,31 @@ class Info_and_Options:
 
             if inp2 == '1':
                 ben.list_beneficiaries()             # Calling list_beneficiaries method from Beneficiaries class for printing all the existing beneficiaries.
+                break
 
             elif inp2 == '2':
                 cards.cards_info()                   # Calling cards_info method from Cards class for printing all cards details.
+                break
 
             elif inp2 == '3':
                 ben.add_beneficiary()                # Calling add_beneficiary method from Beneficiaries class for adding a new beneficiary.
+                break
 
             elif inp2 == '4':
                 login.update_info(self.userid)       # Calling update_info method from Login class for updating the Account information.
+                break
 
             elif inp2 == '5':
                 ben.transfer_funds()                 # Calling transfer_funds method from Beneficiaries class to tranfer funds from the account of user logged in.
+                break
 
             elif inp2 == '6':
                 cards.change_mpin()                  # Calling change_mpin method from Cards class for changing the MPIN.
+                break
 
             elif inp2 == '7':
                 cards.reg_newcard()                  # Calling reg_newcard method from Cards class to register for a new card.
+                break
 
             else:
                 print('\nInvalid Input. Try Again...')
-
-            inp5 = input('\nPress 1 to view options again or any other key to exit : ')
-
-            if inp5 == '1':
-                pass
-            else:
-                break
-

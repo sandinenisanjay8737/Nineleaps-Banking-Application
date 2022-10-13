@@ -6,7 +6,7 @@ from loading import Loading
 
 while True:
 
-    inp = input('\nPress 1 if you are an existing customer or\nPress 2 if you are new to Nineleaps Banking : ')
+    inp = input('\nPress 1 to LOG IN or\nPress 2 if you are new to Nineleaps Banking : ')
 
     login = Login(maintenance=False)             # Creating an object of Login class.
     ''' The parameter "maintenance" must be passed as True in case of maintenance.'''
@@ -60,6 +60,7 @@ while True:
                         print('\n'+'Logged Out..\n\nThank You for visiting...','\n')
 
                         break
+                break
         
         elif inp == '2':                         # Flow enters this snippet if user selects registration.
 
