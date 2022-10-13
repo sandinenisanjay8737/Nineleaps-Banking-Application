@@ -26,8 +26,8 @@ class Login:
     We need to create an object of this class in that file and we can call these class methods depending on our requirement.
 
     Parameters:
-                locked (bool) : Keyword argument initiated as False.( default is False )
-                                Changes to True if all the password attempts are used.
+             locked (bool) : Keyword argument initiated as False.( default is False )
+                             Changes to True if all the password attempts are used.
         
         maintenance (bool) : Keyword argument initiated as False.( default is False )
                                 Must be passed as True when we don't want the users to login during maintenance of the Application.
@@ -59,8 +59,11 @@ class Login:
 
         '''
         This method is for Logging the user in.
+
         A query is executed to get all the existing usernames of users in our Bank. After user enters the User Id, it is validated.
-        If the User Id does not exist, then user is asked again for the User Id. 
+        If the User Id does not exist, then user is asked again for the User Id. And after the correct user id is entered,
+        a query is executed to get the correct password of the user from login table, then there are 3 attempts provided for the user.
+        In case of wrong password entered, if all the attempts are used, program is exited.
 
         Parameters: None
         Returns: None
