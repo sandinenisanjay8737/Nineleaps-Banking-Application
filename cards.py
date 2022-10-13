@@ -198,7 +198,7 @@ class Cards:
 
                 if len(new_pin) == 4:              # New MPIN Validation.
 
-                    if new_pin.replace(' ','').isalnum():
+                    if new_pin.replace(' ','').isnumeric():
                         break
                     else:
                         print('\nMPIN must only have digits.\nNo alphabets or special characters are allowed.\nTry again...')
@@ -242,7 +242,7 @@ class Cards:
 
                 while True:                                    # Infinite while loop that breaks only when the correct old MPIN is entered by the user.
 
-                    old_pin = int(input('\nEnter the old MPIN : '))
+                    old_pin = input('\nEnter the old MPIN : ')
 
                     if old_pin == cr_pin:
 
@@ -256,10 +256,12 @@ class Cards:
                         con.execute(query3,seq3)
 
                         print('\nYour Credit card MPIN changed successfully....\n')
+
                         break
                     
                     else:
                         print('Wrong PIN entered. Try Again...')
+                break
 
             elif inp == '2':
 
@@ -273,7 +275,7 @@ class Cards:
                 card_no = int(input('Select the Debit card for which you want to change the MPIN : '))
 
                 query2 = '''SELECT dpin 
-                            FROM dedit_cards 
+                            FROM debit_cards 
                             WHERE debit_card = (%s)'''
                 
                 seq2 = (s[card_no],)
@@ -282,7 +284,8 @@ class Cards:
 
                 while True:                                    # Infinite while loop that breaks only when the correct old MPIN is entered by the user.
 
-                    old_pin = int(input('\nEnter the old MPIN : '))
+                    old_pin = input('\nEnter the old MPIN : ')
+
                     if old_pin == cr_pin:
 
                         new_pin = new_pin_check()              # Calling the new_pin_check function from the same method to validate New MPIN.
@@ -299,6 +302,7 @@ class Cards:
                     
                     else:
                         print('\nWrong PIN entered. Try Again...')
+                break
             else:
 
                 print('\nInvalid Input. Try Again....')
