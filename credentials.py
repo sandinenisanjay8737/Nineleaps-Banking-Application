@@ -9,5 +9,5 @@ class Details:
 
     host='localhost'
     user="root"
-    password="Your_Password"   # Replace it with your MySQL password.
+    password="Your_password"   # Replace it with your MySQL password.
     db="DB_name"               # Replace it with your database name.

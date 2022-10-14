@@ -59,16 +59,31 @@ class Registration:
         address = input(enterstring.format(reg[2]))          # No Validation for address as it may contain alphabets,digits and special characters.
 
         while True:
-
+            
+            query = '''SELECT aadhar FROM registration'''    # Query to get all the existing Aadhar Numbers.
+            seq = ()
+            con.execute(query,seq)
+            existing_anos = cur.fetchall()
+            l=[i[0] for i in existing_anos]
+            
             aadhar = input(enterstring.format(reg[3]))       # Aadhar Number Validation
             ano = aadhar.replace(' ','')
-
             flag = val.aadhar_check(ano)                     # Calling aadhar_check method from Validation class.
 
-            if flag is True:                                 # Aadhar number while loop breaks only if it is valid. 
-                break
-        
+            if flag is True:                                 # Aadhar number while loop breaks only if it is valid and new one. 
+                
+                if aadhar in l:
+                    print('\nThe entered Aadhar Number is already enrolled in our bank.')
+                else:
+                    break
+                   
         while True:
+
+            query = '''SELECT mobile FROM registration'''    # Query to get all the existing Mobile Numbers.
+            seq = ()
+            con.execute(query,seq)
+            existing_mnos = cur.fetchall()
+            l=[i[0] for i in existing_mnos]
 
             mobile = input(enterstring.format(reg[4]))       # Mobile Number Validation
 
@@ -76,8 +91,12 @@ class Registration:
 
             flag = val.mobile_check(mno)                     # Calling mobile_check method from Validation class.
 
-            if flag is True:                                 # Mobile number while loop breaks only if it is valid.
-                break
+            if flag is True:                                 # Mobile number while loop breaks only if it is valid and new one.
+                
+                if mobile in l:
+                    print('\nThe entered Mobile Number is already enrolled in our bank.')
+                else:
+                    break
 
         self.accno = '251510'+str(randint(10**5,(10**6-1)))  # Generating Account Number
 
