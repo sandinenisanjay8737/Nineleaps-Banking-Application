@@ -104,31 +104,40 @@ class Cards:
         '''
         This method is for registering for a new credit or debit card for the user.
         A query is executed to get the count of credit_cards and debit_cards that the user already have.
-        If the count is less than 4, then only user is eligible for applying for a new card. They cannot apply for another card if the count is already 4.
+        If the count is less than 2 either for credit card or for debit card (Only 2 credit cards and 2 debit cards are allowed for one user),
+        then only user is eligible for applying for a new card. They cannot apply for another card if the count is already 2.
 
         Parameters: None
         Returns: None
         '''
 
-        query = '''SELECT count(*) 
-                   FROM ((SELECT * FROM credit_cards WHERE id = (%s)) 
-                            UNION ALL 
-                         (SELECT * FROM debit_cards WHERE id = (%s))) AS a'''
+        print('\n','< Application for a new card >'.center(50,'*'),'\n')
+
+        inp = input('Press 1 to apply for a Credit card or any other key for Debit card : ')
+
+        query1 = '''SELECT count(*) 
+                    FROM credit_cards 
+                    WHERE id = (%s)'''
         
-        seq = (self.accno,self.accno)                  # Query to get the count of cards that the user already have.
-        con.execute(query,seq)
-        num_cards = cur.fetchone()[0]
+        seq = (self.accno,)                  # Query to get the count of credit cards that the user already have.
+        con.execute(query1,seq)
+        num_crcards = cur.fetchone()[0]
 
-        if num_cards < 4:
+        query2 = '''SELECT count(*) 
+                    FROM debit_cards 
+                    WHERE id = (%s)'''
+        
+        seq = (self.accno,)                  # Query to get the count of debit cards that the user already have.
+        con.execute(query2,seq)
+        num_dbcards = cur.fetchone()[0]
 
-            print('\n','< Application for a new card >'.center(50,'*'),'\n')
+        if inp == '1' :
 
-            inp = input('Press 1 to apply for a Credit card or any other key for Debit card : ')
+            if num_crcards < 2:
 
-            if inp == '1':
                 query = '''UPDATE credit_cards 
-                           SET id = (%s) 
-                           WHERE id = (SELECT id+50 FROM registration WHERE accno = (%s))'''
+                        SET id = (%s) 
+                        WHERE id = (SELECT id+50 FROM registration WHERE accno = (%s))'''
 
                 # While creating the credit_cards table and iserting data, I have inserted integers from 1 to 100 in the id column.
                 # So my credit_cards table contains pre-defined card numbers with cpin and ccvv already alotted.
@@ -140,9 +149,15 @@ class Cards:
                 print('\nNew Credit card applied and will be sent to you within 5 working days...')
 
             else:
+                print('\nYou already have 2 credit cards. Number of cards reached maximum limit.\n\nYou cannot apply for another credit card...')
+        
+        else:
+
+            if num_dbcards < 2:
+
                 query = '''UPDATE debit_cards 
-                           SET id = (%s) 
-                           WHERE id = (SELECT id+50 FROM registration WHERE accno = (%s))'''
+                        SET id = (%s) 
+                        WHERE id = (SELECT id+50 FROM registration WHERE accno = (%s))'''
 
                 # While creating the debit_cards table and iserting data, I have inserted integers from 1 to 100 in the id column.
                 # So my debit_cards table contains pre-defined card numbers with dpin and dcvv already alotted.
@@ -153,9 +168,8 @@ class Cards:
 
                 print('\nNew Debit card applied and will be sent to you within 5 working days...')
 
-        else:
-            print('\nYou already have 4 cards. Number of cards reached maximum limit.\n\nYou cannot apply for another card...')
-            
+            else:
+                print('\nYou already have 2 debit cards. Number of cards reached maximum limit.\n\nYou cannot apply for another debit card...')
 
     def change_mpin(self):
 
