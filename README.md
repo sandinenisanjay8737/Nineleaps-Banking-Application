@@ -160,3 +160,5 @@ There are 11 .py files for different operations. They are -
         7) Asking to confirm password while netbanking account creation and confirm New PIN while changing MPIN of a Card.
         8) While adding a beneficiary, Checking if the beneficiary Account Number is from the same bank
            and also not allowing to add the user's own account.
+        9) Aadhar Number and Mobile number are checked for new users. If they are already in the database, user is asked for the input again.
+        10) One User is allowed only 2 credit cards and 2 debit cards. If they try to register a new card again, a message is displayed.
